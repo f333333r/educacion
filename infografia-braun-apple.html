@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Del Funcionalismo Alemán al Minimalismo Digital — Braun & Apple</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5F0E8;
+    --warm-white: #FAF8F4;
+    --charcoal: #1C1C1A;
+    --mid: #4A4845;
+    --muted: #8A8680;
+    --braun-blue: #1B3F6E;
+    --braun-light: #D6E4F5;
+    --braun-mid: #4A7AB5;
+    --apple-dark: #1A1A1A;
+    --apple-silver: #E8E8E8;
+    --apple-mid: #888;
+    --bauhaus-gold: #8B6914;
+    --bauhaus-light: #F5E8C0;
+    --serif: 'DM Serif Display', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+    --border: 0.5px solid rgba(0,0,0,0.10);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--cream);
+    color: var(--charcoal);
+    min-height: 100vh;
+  }
+
+  /* ── PAGE WRAPPER ── */
+  .page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 3rem 2rem 5rem;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    background: var(--charcoal);
+    border-radius: 20px;
+    padding: 3rem 2.5rem 2.5rem;
+    margin-bottom: 2rem;
+    overflow: hidden;
+  }
+  .hero-geo {
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    border: 40px solid rgba(255,255,255,0.04);
+  }
+  .hero-geo2 {
+    position: absolute;
+    bottom: -40px; left: -30px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    border: 30px solid rgba(255,255,255,0.03);
+  }
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 1.2rem;
+  }
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(28px, 5vw, 42px);
+    color: #fff;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: rgba(255,255,255,0.65);
+  }
+  .hero-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.7;
+    max-width: 480px;
+    margin-bottom: 2rem;
+    font-weight: 300;
+  }
+  .hero-brands {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .brand-chip {
+    background: rgba(255,255,255,0.09);
+    border: 0.5px solid rgba(255,255,255,0.14);
+    border-radius: 24px;
+    padding: 8px 18px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.85);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+  .brand-arrow { color: rgba(255,255,255,0.3); font-size: 20px; }
+
+  /* ── SECTION LABEL ── */
+  .sec-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    margin-bottom: 0.9rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 0.5px solid rgba(0,0,0,0.08);
+  }
+
+  /* ── CONNECTOR ── */
+  .connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.6rem 0;
+    gap: 4px;
+  }
+  .conn-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); }
+  .conn-line { width: 1px; height: 32px; background: rgba(0,0,0,0.12); }
+  .conn-label { font-size: 10px; letter-spacing: 0.08em; color: var(--muted); text-transform: uppercase; }
+
+  /* ── BAUHAUS ── */
+  .bauhaus-card {
+    background: var(--bauhaus-light);
+    border-radius: 16px;
+    border: 0.5px solid rgba(139,105,20,0.2);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .bauhaus-card::before {
+    content: 'BAUHAUS';
+    position: absolute;
+    right: -10px; top: 50%;
+    transform: translateY(-50%) rotate(90deg);
+    font-family: var(--serif);
+    font-size: 80px;
+    color: rgba(139,105,20,0.07);
+    letter-spacing: 0.1em;
+    pointer-events: none;
+  }
+  .bauhaus-year {
+    font-family: var(--serif);
+    font-size: 56px;
+    color: var(--bauhaus-gold);
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+  .bauhaus-title {
+    font-size: 17px;
+    font-weight: 500;
+    color: #4a3210;
+    margin-bottom: 0.6rem;
+  }
+  .bauhaus-body {
+    font-size: 13.5px;
+    color: #6b520a;
+    line-height: 1.75;
+    font-weight: 300;
+    max-width: 520px;
+  }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 1.25rem;
+  }
+  .tag {
+    font-size: 11px;
+    padding: 4px 12px;
+    border-radius: 14px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+  .tag-gold { background: rgba(139,105,20,0.12); color: #5a3d05; border: 0.5px solid rgba(139,105,20,0.25); }
+
+  /* ── BRAUN ── */
+  .braun-card {
+    background: #EDF3FB;
+    border-radius: 16px;
+    border: 0.5px solid rgba(27,63,110,0.15);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .braun-card::before {
+    content: 'BRAUN';
+    position: absolute;
+    right: -8px; top: 50%;
+    transform: translateY(-50%) rotate(90deg);
+    font-family: var(--serif);
+    font-size: 80px;
+    color: rgba(27,63,110,0.06);
+    pointer-events: none;
+  }
+  .braun-year { font-family: var(--serif); font-size: 56px; color: var(--braun-blue); line-height: 1; margin-bottom: 0.4rem; }
+  .braun-title { font-size: 17px; font-weight: 500; color: #0d2a4a; margin-bottom: 0.6rem; }
+  .braun-body { font-size: 13.5px; color: #2a4f7a; line-height: 1.75; font-weight: 300; max-width: 520px; }
+  .tag-blue { background: rgba(27,63,110,0.1); color: #0d2a4a; border: 0.5px solid rgba(27,63,110,0.2); }
+
+  /* ── PERSONAS ── */
+  .personas-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .persona-card {
+    background: var(--warm-white);
+    border-radius: 16px;
+    border: var(--border);
+    padding: 1.5rem;
+  }
+  .persona-avatar {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    margin-bottom: 1rem;
+  }
+  .av-rams { background: var(--braun-light); }
+  .av-ive  { background: var(--apple-silver); }
+  .persona-name { font-size: 17px; font-weight: 500; margin-bottom: 2px; }
+  .persona-role { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.9rem; }
+  .persona-bio { font-size: 12.5px; color: var(--mid); line-height: 1.7; font-weight: 300; }
+  .persona-badge {
+    display: inline-block;
+    margin-top: 0.75rem;
+    font-size: 10px;
+    padding: 3px 10px;
+    border-radius: 10px;
+    font-weight: 500;
+  }
+  .badge-braun { background: var(--braun-light); color: var(--braun-blue); border: 0.5px solid rgba(27,63,110,0.2); }
+  .badge-apple { background: var(--apple-silver); color: #333; border: 0.5px solid rgba(0,0,0,0.12); }
+
+  /* ── QUOTE ── */
+  .quote-block {
+    border-left: 3px solid var(--charcoal);
+    padding: 1rem 1.25rem;
+    background: var(--warm-white);
+    border-radius: 0 12px 12px 0;
+    margin-bottom: 2rem;
+  }
+  .quote-text {
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+    font-style: italic;
+    color: var(--charcoal);
+  }
+  .quote-attr { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+  /* ── 10 PRINCIPIOS ── */
+  .principios-wrap {
+    background: var(--charcoal);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
+  .principios-intro {
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.7;
+    font-weight: 300;
+    margin-bottom: 1.5rem;
+    max-width: 520px;
+  }
+  .principios-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .p-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 8px 10px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 8px;
+    border: 0.5px solid rgba(255,255,255,0.07);
+  }
+  .p-num { font-size: 10px; color: rgba(255,255,255,0.3); min-width: 16px; padding-top: 1px; font-weight: 500; }
+  .p-text { font-size: 12px; color: rgba(255,255,255,0.8); line-height: 1.4; }
+
+  /* ── COMPARACIÓN ── */
+  .comp-wrap {
+    display: grid;
+    grid-template-columns: 1fr 48px 1fr;
+    margin-bottom: 2rem;
+    border-radius: 16px;
+    overflow: hidden;
+    border: var(--border);
+  }
+  .comp-col { padding: 1.5rem 1.25rem; }
+  .comp-braun { background: #1B3F6E; }
+  .comp-apple { background: #1A1A1A; }
+  .comp-mid {
+    background: #111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .comp-mid-text {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #444;
+    writing-mode: vertical-rl;
+  }
+  .comp-brand {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 1.1rem;
+    font-weight: 500;
+  }
+  .cb { color: rgba(255,255,255,0.4); }
+  .ca { color: rgba(255,255,255,0.3); }
+  .comp-row { margin-bottom: 10px; }
+  .comp-row-label { font-size: 10px; opacity: 0.4; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 2px; }
+  .comp-row-val { font-size: 12.5px; line-height: 1.45; }
+  .cv-b { color: rgba(255,255,255,0.85); }
+  .cv-a { color: rgba(255,255,255,0.75); }
+
+  /* ── PRODUCTOS ── */
+  .productos-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .prod-col {
+    border-radius: 16px;
+    border: var(--border);
+    overflow: hidden;
+    background: var(--warm-white);
+  }
+  .prod-header {
+    padding: 0.75rem 1.25rem;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 500;
+    border-bottom: 0.5px solid rgba(0,0,0,0.07);
+  }
+  .ph-braun { background: var(--braun-light); color: var(--braun-blue); }
+  .ph-apple { background: var(--apple-silver); color: #333; }
+  .prod-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 1.25rem;
+    border-bottom: 0.5px solid rgba(0,0,0,0.05);
+  }
+  .prod-item:last-child { border-bottom: none; }
+  .prod-icon-wrap {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 18px;
+  }
+  .pi-b { background: var(--braun-light); }
+  .pi-a { background: var(--apple-silver); }
+  .prod-name { font-size: 13px; font-weight: 500; }
+  .prod-meta { font-size: 11px; color: var(--muted); margin-top: 1px; }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative;
+    padding-left: 28px;
+    margin-bottom: 2rem;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px; top: 10px; bottom: 10px;
+    width: 1px;
+    background: rgba(0,0,0,0.1);
+  }
+  .tl-item { position: relative; margin-bottom: 1.25rem; }
+  .tl-dot {
+    position: absolute;
+    left: -24px; top: 4px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    border: 2px solid;
+    background: var(--cream);
+  }
+  .tl-year { font-size: 11px; font-weight: 500; margin-bottom: 2px; }
+  .tl-text { font-size: 13px; color: var(--mid); line-height: 1.6; font-weight: 300; }
+  .dot-gold { border-color: var(--bauhaus-gold); }
+  .dot-blue { border-color: var(--braun-blue); }
+  .dot-dark { border-color: var(--charcoal); }
+  .dot-purple { border-color: #534AB7; }
+  .year-gold { color: var(--bauhaus-gold); }
+  .year-blue { color: var(--braun-blue); }
+  .year-dark { color: var(--charcoal); }
+  .year-purple { color: #534AB7; }
+
+  /* ── DATOS CURIOSOS ── */
+  .datos-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+  }
+  .dato-card {
+    border-radius: 14px;
+    border: var(--border);
+    padding: 1.25rem 1.25rem 1rem;
+    background: var(--warm-white);
+  }
+  .dato-num {
+    font-family: var(--serif);
+    font-size: 40px;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .dato-label { font-size: 12px; color: var(--mid); line-height: 1.55; font-weight: 300; }
+  .dn-blue { color: var(--braun-blue); }
+  .dn-green { color: #0F6E56; }
+  .dn-gold { color: var(--bauhaus-gold); }
+  .dn-purple { color: #534AB7; }
+
+  /* ── REFLEXIÓN ── */
+  .reflexion {
+    background: var(--warm-white);
+    border-radius: 16px;
+    border: var(--border);
+    padding: 2rem;
+    margin-bottom: 1rem;
+  }
+  .ref-title { font-family: var(--serif); font-size: 20px; margin-bottom: 0.75rem; }
+  .ref-body { font-size: 13.5px; color: var(--mid); line-height: 1.8; font-weight: 300; }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    margin-top: 2rem;
+    line-height: 1.8;
+  }
+
+  /* ── FADE IN ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .page > * {
+    animation: fadeUp 0.5s ease both;
+  }
+  .page > *:nth-child(1) { animation-delay: 0.05s; }
+  .page > *:nth-child(2) { animation-delay: 0.10s; }
+  .page > *:nth-child(3) { animation-delay: 0.15s; }
+  .page > *:nth-child(4) { animation-delay: 0.20s; }
+  .page > *:nth-child(5) { animation-delay: 0.25s; }
+  .page > *:nth-child(6) { animation-delay: 0.30s; }
+  .page > *:nth-child(7) { animation-delay: 0.35s; }
+  .page > *:nth-child(8) { animation-delay: 0.40s; }
+  .page > *:nth-child(9) { animation-delay: 0.45s; }
+
+  @media (max-width: 520px) {
+    .personas-grid, .productos-grid, .datos-grid, .principios-grid { grid-template-columns: 1fr; }
+    .comp-wrap { grid-template-columns: 1fr 36px 1fr; }
+    .hero-title { font-size: 26px; }
+    .page { padding: 1.5rem 1rem 3rem; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── HERO ── -->
+  <div class="hero">
+    <div class="hero-geo"></div>
+    <div class="hero-geo2"></div>
+    <div class="hero-eyebrow">Diseño de producto · Historia e influencia</div>
+    <h1 class="hero-title">Del funcionalismo<br><em>alemán</em> al<br>minimalismo digital</h1>
+    <p class="hero-sub">Cómo la filosofía de diseño de Braun cruzó el Atlántico y redefinió los productos que usamos a diario.</p>
+    <div class="hero-brands">
+      <div class="brand-chip">🇩🇪 Braun GmbH</div>
+      <div class="brand-arrow">→</div>
+      <div class="brand-chip">🇺🇸 Apple Inc.</div>
+    </div>
+  </div>
+
+  <!-- ── BAUHAUS ── -->
+  <div>
+    <div class="sec-label">El origen · La escuela que lo cambió todo</div>
+    <div class="bauhaus-card">
+      <div class="bauhaus-year">1919</div>
+      <div class="bauhaus-title">La Bauhaus — Weimar, Alemania</div>
+      <p class="bauhaus-body">Walter Gropius funda la escuela más influyente de la historia del diseño. Su premisa era radical: arte, artesanía y tecnología debían trabajar juntos. El objetivo era crear objetos bellos <em>y</em> funcionales para la vida cotidiana, producidos industrialmente y accesibles para todos.</p>
+      <div class="tags">
+        <span class="tag tag-gold">Forma sigue a la función</span>
+        <span class="tag tag-gold">Arte + industria</span>
+        <span class="tag tag-gold">Sin ornamento</span>
+        <span class="tag tag-gold">Racionalismo</span>
+        <span class="tag tag-gold">Geometría pura</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="connector">
+    <div class="conn-dot"></div>
+    <div class="conn-line"></div>
+    <div class="conn-label">hereda la filosofía</div>
+    <div class="conn-line"></div>
+    <div class="conn-dot"></div>
+  </div>
+
+  <!-- ── BRAUN ── -->
+  <div>
+    <div class="sec-label">Braun GmbH · Diseño funcional al máximo</div>
+    <div class="braun-card">
+      <div class="braun-year">1921</div>
+      <div class="braun-title">Braun GmbH — Frankfurt, Alemania</div>
+      <p class="braun-body">Max Braun funda la empresa en 1921, inicialmente fabricando radios y pequeños electrodomésticos. En los años 50, con la llegada del diseñador Dieter Rams, Braun abraza por completo la filosofía Bauhaus y se convierte en referencia mundial de diseño industrial: productos blancos, grises, rectangulares, con interfaces limpias e intuitivas.</p>
+      <div class="tags">
+        <span class="tag tag-blue">Blanco y gris</span>
+        <span class="tag tag-blue">Interfaces mínimas</span>
+        <span class="tag tag-blue">Rectilíneo</span>
+        <span class="tag tag-blue">Producción en serie</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PERSONAS ── -->
+  <div>
+    <div class="sec-label">Los protagonistas</div>
+    <div class="personas-grid">
+      <div class="persona-card">
+        <div class="persona-avatar av-rams">✦</div>
+        <div class="persona-name">Dieter Rams</div>
+        <div class="persona-role">Braun · 1955 – 1997</div>
+        <p class="persona-bio">Nació en 1932 en Wiesbaden. Estudió arquitectura e interiorismo. En Braun desarrolló una filosofía de diseño tan coherente que se resume en 10 principios. Sus diseños —calculadoras, radios, afeitadoras— son expuestos hoy en museos como el MoMA de Nueva York.</p>
+        <span class="persona-badge badge-braun">🇩🇪 Alemania</span>
+      </div>
+      <div class="persona-card">
+        <div class="persona-avatar av-ive">◆</div>
+        <div class="persona-name">Jonathan Ive</div>
+        <div class="persona-role">Apple · 1992 – 2019</div>
+        <p class="persona-bio">Nació en 1967 en Londres. Estudió diseño industrial en Newcastle. Llegó a Apple en 1992 y junto a Steve Jobs redefinió cómo el mundo ve los productos tecnológicos. El iMac, el iPod y el iPhone son suyos. Abiertamente admirador de Dieter Rams.</p>
+        <span class="persona-badge badge-apple">🇬🇧 Reino Unido</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── QUOTE ── -->
+  <div class="quote-block">
+    <div class="quote-text">"El hecho de que Dieter Rams fuera capaz de manifestar tan consistentemente su filosofía y sus valores a través de una amplia gama de productos... para mí, eso es impresionante."</div>
+    <div class="quote-attr">— Jonathan Ive · entrevista con la Rams Foundation · rams-foundation.org</div>
+  </div>
+
+  <!-- ── 10 PRINCIPIOS ── -->
+  <div>
+    <div class="sec-label">Los 10 principios de Dieter Rams · La biblia del diseño</div>
+    <div class="principios-wrap">
+      <p class="principios-intro">Rams formuló estas reglas en Braun. Décadas después, Apple las aplicó casi literalmente. ¿Casualidad? Jonathan Ive tiene el libro de Rams en su escritorio.</p>
+      <div class="principios-grid">
+        <div class="p-item"><span class="p-num">01</span><span class="p-text">El buen diseño es innovador</span></div>
+        <div class="p-item"><span class="p-num">02</span><span class="p-text">Hace útil al producto</span></div>
+        <div class="p-item"><span class="p-num">03</span><span class="p-text">Es estético</span></div>
+        <div class="p-item"><span class="p-num">04</span><span class="p-text">Hace comprensible al producto</span></div>
+        <div class="p-item"><span class="p-num">05</span><span class="p-text">Es discreto, no llamativo</span></div>
+        <div class="p-item"><span class="p-num">06</span><span class="p-text">Es honesto</span></div>
+        <div class="p-item"><span class="p-num">07</span><span class="p-text">Es duradero, no de moda</span></div>
+        <div class="p-item"><span class="p-num">08</span><span class="p-text">Es meticuloso hasta el detalle</span></div>
+        <div class="p-item"><span class="p-num">09</span><span class="p-text">Es respetuoso con el entorno</span></div>
+        <div class="p-item"><span class="p-num">10</span><span class="p-text">Involucra el menor diseño posible</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── COMPARACIÓN ── -->
+  <div>
+    <div class="sec-label">Comparación · Filosofía compartida</div>
+    <div class="comp-wrap">
+      <div class="comp-col comp-braun">
+        <div class="comp-brand cb">Braun</div>
+        <div class="comp-row">
+          <div class="comp-row-label cv-b">Materiales</div>
+          <div class="comp-row-val cv-b">Metal, plástico blanco/gris</div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-row-label cv-b">Paleta</div>
+          <div class="comp-row-val cv-b">Blancos, negros, grises</div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-row-label cv-b">Forma</div>
+          <div class="comp-row-val cv-b">Geométrica, rectilínea</div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-row-label cv-b">Interfaz</div>
+          <div class="comp-row-val cv-b">Botones mínimos y claros</div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-row-label cv-b">Filosofía</div>
+          <div class="comp-row-val cv-b">Funcional ante todo</div>
+        </div>
+      </div>
+      <div class="comp-mid">
+        <div class="comp-mid-text">herencia ↓</div>
+      </div>
+      <div class="comp-col comp-apple">
+        <div class="comp-brand ca">Apple</div>
+        <div class="comp-row">
+          <div class="comp-row-label cv-a">Materiales</div>
+          <div class="comp-row-val cv-a">Aluminio, vidrio, plástico</div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-row-label cv-a">Paleta</div>
+          <div class="comp-row-val cv-a">Plateados, negros, blancos</div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-row-label cv-a">Forma</div>
+          <div class="comp-row-val cv-a">Esquinas redondeadas, fluida</div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-row-label cv-a">Interfaz</div>
+          <div class="comp-row-val cv-a">Táctil, sin botones</div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-row-label cv-a">Filosofía</div>
+          <div class="comp-row-val cv-a">Funcional + emocional</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PRODUCTOS ── -->
+  <div>
+    <div class="sec-label">Productos paralelos · Objetos que hablan solos</div>
+    <div class="productos-grid">
+      <div class="prod-col">
+        <div class="prod-header ph-braun">🟦 Braun</div>
+        <div class="prod-item">
+          <div class="prod-icon-wrap pi-b">📻</div>
+          <div>
+            <div class="prod-name">Radio T3 Pocket</div>
+            <div class="prod-meta">1958 · Dieter Rams</div>
+          </div>
+        </div>
+        <div class="prod-item">
+          <div class="prod-icon-wrap pi-b">🧮</div>
+          <div>
+            <div class="prod-name">Calculadora ET66</div>
+            <div class="prod-meta">1987 · Dieter Rams</div>
+          </div>
+        </div>
+        <div class="prod-item">
+          <div class="prod-icon-wrap pi-b">🎶</div>
+          <div>
+            <div class="prod-name">Tocadiscos SK4</div>
+            <div class="prod-meta">1956 · Dieter Rams</div>
+          </div>
+        </div>
+      </div>
+      <div class="prod-col">
+        <div class="prod-header ph-apple">⬛ Apple</div>
+        <div class="prod-item">
+          <div class="prod-icon-wrap pi-a">🎵</div>
+          <div>
+            <div class="prod-name">iPod</div>
+            <div class="prod-meta">2001 · Jonathan Ive</div>
+          </div>
+        </div>
+        <div class="prod-item">
+          <div class="prod-icon-wrap pi-a">📱</div>
+          <div>
+            <div class="prod-name">iPhone</div>
+            <div class="prod-meta">2007 · Jonathan Ive</div>
+          </div>
+        </div>
+        <div class="prod-item">
+          <div class="prod-icon-wrap pi-a">💻</div>
+          <div>
+            <div class="prod-name">iMac G3</div>
+            <div class="prod-meta">1998 · Jonathan Ive</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TIMELINE ── -->
+  <div>
+    <div class="sec-label">Línea del tiempo · De la Bauhaus a tu bolsillo</div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot dot-gold"></div>
+        <div class="tl-year year-gold">1919</div>
+        <div class="tl-text">Nace la Bauhaus en Weimar. Gropius propone unir arte e industria bajo una misma filosofía.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot dot-blue"></div>
+        <div class="tl-year year-blue">1921 · 1955</div>
+        <div class="tl-text">Braun se funda. En 1955 Dieter Rams entra como diseñador y transforma la empresa por completo.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot dot-blue"></div>
+        <div class="tl-year year-blue">1956 – 1987</div>
+        <div class="tl-text">Rams crea decenas de productos icónicos: la radio T3, el sistema SK4 (apodado "Blancanieves"), la calculadora ET66.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot dot-dark"></div>
+        <div class="tl-year year-dark">1976</div>
+        <div class="tl-text">Apple se funda. Steve Jobs visita museos de diseño en Europa y queda fascinado con el trabajo de Braun.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot dot-dark"></div>
+        <div class="tl-year year-dark">1992</div>
+        <div class="tl-text">Jonathan Ive se une a Apple. Su colección personal de productos Braun es famosa en Silicon Valley.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot dot-dark"></div>
+        <div class="tl-year year-dark">1998 – 2019</div>
+        <div class="tl-text">Ive diseña el iMac, iPod, iPhone, iPad y el Apple Watch. Los paralelos con Rams son innegables y documentados.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot dot-purple"></div>
+        <div class="tl-year year-purple">Hoy</div>
+        <div class="tl-text">Los principios que nacieron en la Bauhaus en 1919 viven en el iPhone que millones usan cada día.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── DATOS CURIOSOS ── -->
+  <div>
+    <div class="sec-label">Datos que sorprenden</div>
+    <div class="datos-grid">
+      <div class="dato-card">
+        <div class="dato-num dn-blue">10</div>
+        <div class="dato-label">Principios de diseño formulados por Rams, adoptados tácitamente por Apple</div>
+      </div>
+      <div class="dato-card">
+        <div class="dato-num dn-green">27</div>
+        <div class="dato-label">Años que Ive estuvo en Apple, redefiniendo el diseño industrial global</div>
+      </div>
+      <div class="dato-card">
+        <div class="dato-num dn-gold">1921</div>
+        <div class="dato-label">Año de fundación de Braun. Sus productos originales están hoy en el MoMA</div>
+      </div>
+      <div class="dato-card">
+        <div class="dato-num dn-purple">88</div>
+        <div class="dato-label">Años entre la fundación de la Bauhaus (1919) y el lanzamiento del iPhone (2007), con la misma filosofía intacta</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── REFLEXIÓN ── -->
+  <div class="reflexion">
+    <div class="ref-title">¿Y cuál es la lección?</div>
+    <p class="ref-body">El buen diseño no caduca. Las ideas que nacieron en la Bauhaus de 1919, pasaron por los laboratorios de Braun en Frankfurt y llegaron a Cupertino, California, demostrando que los principios sólidos trascienden épocas, fronteras y tecnologías. Lo que Rams llamaba <em>"menos, pero mejor"</em> es exactamente lo que Ive y Jobs convirtieron en los productos más deseados del mundo.</p>
+  </div>
+
+  <div class="footer">
+    Infografía elaborada para curso de diseño · Primer ciclo<br>
+    Bauhaus (1919) → Braun (1955) → Dieter Rams → Jonathan Ive → Apple (1998–hoy)
+  </div>
+
+</div>
+</body>
+</html>

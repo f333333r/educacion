@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trivia: Del Funcionalismo al Minimalismo Digital</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f5f5f0; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1.5rem; }
+  .card { background: #fff; border-radius: 16px; border: 0.5px solid #e0dfd8; padding: 2rem; max-width: 560px; width: 100%; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; padding: 3px 10px; border-radius: 99px; }
+  .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .counter { font-size: 13px; color: #888; font-weight: 500; }
+  .progress-track { height: 3px; background: #ececec; border-radius: 99px; overflow: hidden; margin-bottom: 20px; }
+  .progress-bar { height: 100%; border-radius: 99px; transition: width .4s ease; }
+  .q-card { border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 16px; border: 0.5px solid #e0dfd8; border-top-width: 3px; background: #fff; }
+  .q-icon { font-size: 28px; margin-bottom: 10px; }
+  .q-text { font-size: 17px; font-weight: 500; color: #1a1a1a; line-height: 1.45; }
+  .options { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+  .opt { display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 8px; border: 0.5px solid #e0dfd8; background: #fff; font-size: 14px; color: #1a1a1a; cursor: pointer; text-align: left; width: 100%; transition: background .2s, border .2s; }
+  .opt:hover:not(:disabled) { background: #f7f7f5; }
+  .opt:disabled { cursor: default; }
+  .opt.correct { background: #e1f5ee; border: 1.5px solid #1d9e75; color: #085041; }
+  .opt.wrong { background: #fcebeb; border: 1.5px solid #e24b4a; color: #501313; }
+  .opt.dimmed { color: #bbb; }
+  .lbl { min-width: 26px; height: 26px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; flex-shrink: 0; background: #ececec; color: #888; transition: background .2s, color .2s; }
+  .opt.correct .lbl { background: #1d9e75; color: #fff; }
+  .opt.wrong .lbl { background: #e24b4a; color: #fff; }
+  .mark { margin-left: auto; font-size: 16px; }
+  .exp { display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; border-radius: 8px; background: #f7f7f5; border: 0.5px solid #e0dfd8; margin-bottom: 14px; font-size: 13px; color: #555; line-height: 1.5; }
+  .footer { display: flex; justify-content: space-between; align-items: center; }
+  .dots { display: flex; gap: 6px; }
+  .dot { height: 6px; border-radius: 99px; transition: all .3s ease; }
+  button.next { padding: 9px 20px; font-size: 13px; font-weight: 500; cursor: pointer; border: 0.5px solid #ccc; border-radius: 8px; background: #fff; }
+  button.next:hover { background: #f5f5f0; }
+
+  /* Result */
+  .result { text-align: center; }
+  .result-emoji { font-size: 52px; margin-bottom: 8px; }
+  .result-score { font-size: 48px; font-weight: 500; line-height: 1; }
+  .result-sub { font-size: 13px; color: #888; margin: 6px 0 20px; }
+  .result-bar-track { height: 6px; background: #ececec; border-radius: 99px; overflow: hidden; margin-bottom: 20px; }
+  .result-bar { height: 100%; border-radius: 99px; transition: width 1s ease; }
+  .result-msg { font-size: 15px; color: #1a1a1a; margin-bottom: 24px; }
+  .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 24px; }
+  .stat { border-radius: 8px; padding: 14px 10px; }
+  .stat-n { font-size: 26px; font-weight: 500; }
+  .stat-l { font-size: 12px; opacity: .8; }
+  .stat.ok { background: #e1f5ee; color: #0f6e56; }
+  .stat.err { background: #fcebeb; color: #a32d2d; }
+  button.retry { padding: 10px 28px; font-size: 14px; cursor: pointer; border: 0.5px solid #ccc; border-radius: 8px; background: #fff; font-weight: 500; }
+  button.retry:hover { background: #f5f5f0; }
+</style>
+</head>
+<body>
+<div class="card" id="app"></div>
+
+<script>
+const preguntas = [
+  { q:"¿En qué ciudad y año se fundó la Bauhaus?", ops:["Berlín, 1921","Weimar, 1919","Frankfurt, 1921","Munich, 1923"], r:1, exp:"Walter Gropius fundó la Bauhaus en Weimar, Alemania, en 1919.", icon:"🏛️", tema:"Bauhaus", color:"#534AB7" },
+  { q:"¿Cuál es el principio más famoso de Dieter Rams?", ops:["\"El diseño es arte\"","\"La forma sigue a la función\"","\"Menos, pero mejor\"","\"El buen diseño es eterno\""], r:2, exp:"\"Menos, pero mejor\" fue el principio que Ive y Jobs adoptaron como mantra.", icon:"💬", tema:"Filosofía", color:"#0F6E56" },
+  { q:"¿En qué año fundó Max Braun la empresa Braun GmbH?", ops:["1919","1915","1921","1930"], r:2, exp:"Max Braun fundó Braun GmbH en Frankfurt, Alemania, en 1921.", icon:"🏭", tema:"Braun GmbH", color:"#D85A30" },
+  { q:"¿Cuántos principios de diseño formuló Dieter Rams?", ops:["7","8","10","12"], r:2, exp:"Rams formuló 10 principios de diseño, adoptados casi literalmente por Apple.", icon:"📐", tema:"Dieter Rams", color:"#185FA5" },
+  { q:"¿Dónde estudió diseño industrial Jonathan Ive?", ops:["Londres","Newcastle","Cambridge","Nueva York"], r:1, exp:"Jonathan Ive estudió diseño industrial en Newcastle, Reino Unido.", icon:"🎓", tema:"Jonathan Ive", color:"#3B6D11" },
+  { q:"¿En qué año llegó Jonathan Ive a Apple?", ops:["1990","1992","1995","1998"], r:1, exp:"Ive llegó a Apple en 1992 junto a Steve Jobs.", icon:"🍎", tema:"Apple", color:"#636363" },
+  { q:"¿Cuál de estos NO es un material típico de los productos Braun?", ops:["Metal","Plástico blanco/gris","Aluminio","Vidrio"], r:2, exp:"Apple usa aluminio, vidrio y plástico. Braun se caracterizaba por metal y plástico blanco/gris.", icon:"🔩", tema:"Materiales", color:"#BA7517" },
+  { q:"¿Cuántos años estuvo Jonathan Ive en Apple redefiniendo el diseño industrial?", ops:["20","25","27","30"], r:2, exp:"Ive estuvo 27 años en Apple, redefiniendo el diseño industrial global.", icon:"📅", tema:"Jonathan Ive", color:"#3B6D11" },
+  { q:"¿Qué tienen en común el iMac, el iPod, el iPhone y el MacBook?", ops:["Fueron diseñados por Steve Jobs","Son diseños de Ive inspirados en Dieter Rams","Se fabrican en Frankfurt","Siguen los principios de la Bauhaus de Berlín"], r:1, exp:"El iMac, iPod, iPhone y MacBook fueron diseños de Jonathan Ive, admirador confeso de Dieter Rams.", icon:"💻", tema:"Apple", color:"#636363" },
+  { q:"¿Cuántos años separan la Bauhaus del iPhone, manteniendo la misma filosofía?", ops:["65","75","88","100+"], r:2, exp:"La Bauhaus fue fundada en 1919 y el primer iPhone salió en 2007: 88 años separados por la misma filosofía.", icon:"⏳", tema:"Historia", color:"#993556" },
+];
+
+const LETRAS = ["A","B","C","D"];
+let idx = 0, sel = null, score = 0;
+
+function render() {
+  const app = document.getElementById("app");
+  if (idx >= preguntas.length) { renderResult(app); return; }
+  const p = preguntas[idx];
+  const pct = Math.round((idx / preguntas.length) * 100);
+
+  app.innerHTML = `
+    <div class="header">
+      <span class="badge" style="background:${p.color}18;color:${p.color}">${p.tema}</span>
+      <span class="counter">${idx+1} / ${preguntas.length}</span>
+    </div>
+    <div class="progress-track"><div class="progress-bar" style="width:${pct}%;background:${p.color}"></div></div>
+    <div class="q-card" style="border-top-color:${p.color}">
+      <div class="q-icon">${p.icon}</div>
+      <div class="q-text">${p.q}</div>
+    </div>
+    <div class="options" id="opts"></div>
+    <div id="exp-area"></div>
+    <div class="footer">
+      <div class="dots" id="dots"></div>
+      <div id="btn-area"></div>
+    </div>
+  `;
+
+  const opts = document.getElementById("opts");
+  p.ops.forEach((op, i) => {
+    const btn = document.createElement("button");
+    btn.className = "opt";
+    btn.innerHTML = `<span class="lbl">${LETRAS[i]}</span><span>${op}</span>`;
+    btn.onclick = () => choose(i, p);
+    opts.appendChild(btn);
+  });
+
+  renderDots();
+}
+
+function choose(i, p) {
+  if (sel !== null) return;
+  sel = i;
+  if (i === p.r) score++;
+
+  const btns = document.querySelectorAll(".opt");
+  btns.forEach((btn, j) => {
+    btn.disabled = true;
+    if (j === p.r) { btn.classList.add("correct"); btn.innerHTML += '<span class="mark">✓</span>'; }
+    else if (j === sel && j !== p.r) { btn.classList.add("wrong"); btn.innerHTML += '<span class="mark">✗</span>'; }
+    else btn.classList.add("dimmed");
+  });
+
+  document.getElementById("exp-area").innerHTML = `
+    <div class="exp">
+      <span style="font-size:18px;flex-shrink:0">${i === p.r ? "✅" : "💡"}</span>
+      <span>${p.exp}</span>
+    </div>`;
+
+  document.getElementById("btn-area").innerHTML = `
+    <button class="next" onclick="next()">${idx+1 >= preguntas.length ? "Ver resultado" : "Siguiente →"}</button>`;
+}
+
+function next() {
+  idx++; sel = null;
+  render();
+}
+
+function renderDots() {
+  const c = preguntas[idx]?.color || "#534AB7";
+  const d = document.getElementById("dots");
+  if (!d) return;
+  d.innerHTML = preguntas.map((_, i) => {
+    const w = i === idx ? 20 : 6;
+    const bg = i < idx ? "#1D9E75" : i === idx ? c : "#e0dfd8";
+    return `<div class="dot" style="width:${w}px;background:${bg}"></div>`;
+  }).join("");
+}
+
+function renderResult(app) {
+  const total = preguntas.length;
+  const pct = Math.round((score / total) * 100);
+  const c = score === total ? "#0F6E56" : score >= 7 ? "#534AB7" : score >= 5 ? "#185FA5" : "#D85A30";
+  const msgs = [
+    [total, "¡Perfecto! Eres un experto en diseño", "🏆"],
+    [7, "¡Muy bien! Dieter Rams estaría orgulloso", "👏"],
+    [5, "Nada mal. Sigue explorando el diseño", "🎨"],
+    [0, "Repasa la historia y vuelve a intentarlo", "📖"],
+  ];
+  const [, txt, emoji] = msgs.find(([n]) => score >= n);
+
+  app.innerHTML = `
+    <div class="result">
+      <div class="result-emoji">${emoji}</div>
+      <div class="result-score" style="color:${c}">${score}<span style="font-size:22px;color:#888">/${total}</span></div>
+      <div class="result-sub">${pct}% correcto</div>
+      <div class="result-bar-track"><div class="result-bar" style="width:0%;background:${c}" id="rbar"></div></div>
+      <div class="result-msg">${txt}</div>
+      <div class="stat-grid">
+        <div class="stat ok"><div class="stat-n">${score}</div><div class="stat-l">Correctas</div></div>
+        <div class="stat err"><div class="stat-n">${total - score}</div><div class="stat-l">Incorrectas</div></div>
+      </div>
+      <button class="retry" onclick="restart()">Jugar de nuevo</button>
+    </div>`;
+
+  setTimeout(() => {
+    const bar = document.getElementById("rbar");
+    if (bar) bar.style.width = pct + "%";
+  }, 100);
+}
+
+function restart() { idx = 0; sel = null; score = 0; render(); }
+
+render();
+</script>
+</body>
+</html>
