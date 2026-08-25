@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cuestionario de Gramática</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f6f8;
+      color: #1f2937;
+    }
+
+    .container {
+      width: min(900px, 92%);
+      margin: 40px auto;
+    }
+
+    .header {
+      background: white;
+      padding: 28px;
+      border-radius: 18px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    }
+
+    .header h1 {
+      margin: 0 0 8px;
+      font-size: 30px;
+    }
+
+    .header p {
+      margin: 0;
+      color: #667085;
+      line-height: 1.5;
+    }
+
+    .progress-wrap {
+      margin-top: 20px;
+    }
+
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      margin-bottom: 8px;
+      color: #667085;
+    }
+
+    .progress-bar {
+      height: 10px;
+      background: #e5e7eb;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress {
+      height: 100%;
+      width: 0%;
+      background: #2563eb;
+      transition: width 0.3s ease;
+    }
+
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 18px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    }
+
+    .question-number {
+      font-size: 14px;
+      font-weight: bold;
+      color: #2563eb;
+      margin-bottom: 12px;
+    }
+
+    .question {
+      font-size: 24px;
+      line-height: 1.4;
+      margin-bottom: 24px;
+    }
+
+    .options {
+      display: grid;
+      gap: 12px;
+    }
+
+    .option {
+      width: 100%;
+      text-align: left;
+      padding: 16px 18px;
+      border-radius: 12px;
+      border: 2px solid #e5e7eb;
+      background: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .option:hover:not(:disabled) {
+      border-color: #2563eb;
+      background: #eff6ff;
+    }
+
+    .option.correct {
+      background: #ecfdf3;
+      border-color: #16a34a;
+      color: #166534;
+    }
+
+    .option.incorrect {
+      background: #fef2f2;
+      border-color: #dc2626;
+      color: #991b1b;
+    }
+
+    .option:disabled {
+      cursor: default;
+    }
+
+    .feedback {
+      display: none;
+      margin-top: 22px;
+      padding: 16px;
+      border-radius: 12px;
+      line-height: 1.5;
+    }
+
+    .feedback.show {
+      display: block;
+    }
+
+    .feedback.correct-feedback {
+      background: #ecfdf3;
+      border-left: 4px solid #16a34a;
+    }
+
+    .feedback.incorrect-feedback {
+      background: #fef2f2;
+      border-left: 4px solid #dc2626;
+    }
+
+    .hint {
+      display: none;
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 12px;
+      background: #fff7ed;
+      border-left: 4px solid #f59e0b;
+      color: #7c2d12;
+    }
+
+    .hint.show {
+      display: block;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    button.action {
+      border: none;
+      border-radius: 10px;
+      padding: 12px 18px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .hint-btn {
+      background: #fff7ed;
+      color: #9a3412;
+    }
+
+    .next-btn {
+      background: #2563eb;
+      color: white;
+      margin-left: auto;
+      display: none;
+    }
+
+    .results {
+      text-align: center;
+      display: none;
+    }
+
+    .results h2 {
+      font-size: 30px;
+      margin-bottom: 8px;
+    }
+
+    .score {
+      font-size: 54px;
+      font-weight: bold;
+      color: #2563eb;
+      margin: 15px 0;
+    }
+
+    .results p {
+      color: #667085;
+      font-size: 17px;
+    }
+
+    .restart {
+      margin-top: 20px;
+      background: #2563eb;
+      color: white;
+      padding: 13px 20px;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    @media (max-width: 600px) {
+      .question {
+        font-size: 20px;
+      }
+
+      .card {
+        padding: 22px;
+      }
+
+      .header h1 {
+        font-size: 25px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="header">
+      <h1>Repaso de Gramática</h1>
+      <p>
+        Oración simple y oraciones subordinadas sustantivas:
+        sujeto, objeto directo, objeto indirecto, atributo y complemento agente.
+      </p>
+
+      <div class="progress-wrap">
+        <div class="progress-info">
+          <span id="progressText">Pregunta 1 de 10</span>
+          <span id="scoreText">Puntaje: 0</span>
+        </div>
+
+        <div class="progress-bar">
+          <div class="progress" id="progress"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="quizCard">
+
+      <div id="quizContent">
+
+        <div class="question-number" id="questionNumber"></div>
+
+        <div class="question" id="question"></div>
+
+        <div class="options" id="options"></div>
+
+        <div class="hint" id="hint"></div>
+
+        <div class="feedback" id="feedback"></div>
+
+        <div class="actions">
+          <button class="action hint-btn" id="hintBtn">
+            Ver pista
+          </button>
+
+          <button class="action next-btn" id="nextBtn">
+            Siguiente
+          </button>
+        </div>
+
+      </div>
+
+      <div class="results" id="results">
+        <h2>¡Cuestionario terminado!</h2>
+
+        <div class="score" id="finalScore"></div>
+
+        <p id="finalMessage"></p>
+
+        <button class="restart" onclick="restartQuiz()">
+          Repetir cuestionario
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+<script>
+
+const questions = [
+
+  {
+    question: 'En "Mariana compró un cuaderno nuevo", ¿qué función cumple "Mariana"?',
+    options: [
+      "Sujeto",
+      "Objeto directo",
+      "Objeto indirecto",
+      "Atributo"
+    ],
+    correct: 0,
+    hint: "Busca quién realiza la acción del verbo.",
+    explanation:
+      '"Mariana" es quien realiza la acción de comprar, por lo tanto funciona como sujeto.'
+  },
+
+  {
+    question: 'En "Pedro preparó la cena", ¿qué función cumple "la cena"?',
+    options: [
+      "Sujeto",
+      "Objeto directo",
+      "Objeto indirecto",
+      "Atributo"
+    ],
+    correct: 1,
+    hint: 'Prueba sustituir "la cena" por "la".',
+    explanation:
+      '"La cena" recibe directamente la acción de preparar. Podemos decir: "Pedro la preparó". Es objeto directo.'
+  },
+
+  {
+    question: 'En "Lucía entregó las llaves a su hermano", ¿qué función cumple "a su hermano"?',
+    options: [
+      "Objeto directo",
+      "Sujeto",
+      "Objeto indirecto",
+      "Atributo"
+    ],
+    correct: 2,
+    hint: "Busca quién recibe aquello que se entrega.",
+    explanation:
+      '"A su hermano" señala el destinatario de la acción. Podemos decir: "Lucía le entregó las llaves". Es objeto indirecto.'
+  },
+
+  {
+    question: 'En "El examen parece difícil", ¿qué función cumple "difícil"?',
+    options: [
+      "Objeto directo",
+      "Atributo",
+      "Objeto indirecto",
+      "Complemento agente"
+    ],
+    correct: 1,
+    hint: 'Recuerda que "parecer" es un verbo copulativo.',
+    explanation:
+      '"Difícil" expresa una característica del sujeto mediante el verbo copulativo "parecer". Por ello es atributo.'
+  },
+
+  {
+    question: 'En "La novela fue escrita por una joven autora", ¿qué función cumple "por una joven autora"?',
+    options: [
+      "Objeto indirecto",
+      "Atributo",
+      "Complemento agente",
+      "Objeto directo"
+    ],
+    correct: 2,
+    hint: "Observa que la oración está construida en voz pasiva.",
+    explanation:
+      '"Por una joven autora" señala quién realiza la acción en una oración pasiva. Es complemento agente.'
+  },
+
+  {
+    question: 'En "Me alegra que hayas venido", ¿qué función cumple "que hayas venido"?',
+    options: [
+      "Sujeto",
+      "Objeto directo",
+      "Atributo",
+      "Complemento agente"
+    ],
+    correct: 0,
+    hint: 'Sustituye toda la subordinada por "eso".',
+    explanation:
+      'Podemos decir "Eso me alegra". La subordinada "que hayas venido" funciona como sujeto.'
+  },
+
+  {
+    question: 'En "Espero que termines tu tarea", ¿qué función cumple "que termines tu tarea"?',
+    options: [
+      "Sujeto",
+      "Objeto directo",
+      "Atributo",
+      "Complemento agente"
+    ],
+    correct: 1,
+    hint: 'Pregunta: "¿Qué espero?".',
+    explanation:
+      'La respuesta es "que termines tu tarea". También podemos decir "Espero eso" o "Lo espero". Por tanto, funciona como objeto directo.'
+  },
+
+  {
+    question: 'En "Mi mayor deseo es que todos estén bien", ¿qué función cumple "que todos estén bien"?',
+    options: [
+      "Objeto directo",
+      "Sujeto",
+      "Atributo",
+      "Complemento agente"
+    ],
+    correct: 2,
+    hint: 'Fíjate en el verbo copulativo "ser".',
+    explanation:
+      'La subordinada se relaciona con "Mi mayor deseo" mediante el verbo "es". Por ello funciona como atributo.'
+  },
+
+  {
+    question: 'En "La profesora anunció que mañana habrá examen", ¿qué función cumple "que mañana habrá examen"?',
+    options: [
+      "Objeto directo",
+      "Sujeto",
+      "Atributo",
+      "Complemento agente"
+    ],
+    correct: 0,
+    hint: 'Pregunta: "¿Qué anunció la profesora?".',
+    explanation:
+      'La profesora anunció "eso". La subordinada expresa aquello que fue anunciado y funciona como objeto directo.'
+  },
+
+  {
+    question: 'En "Que leas todos los días mejorará tu vocabulario", ¿qué función cumple "Que leas todos los días"?',
+    options: [
+      "Objeto directo",
+      "Objeto indirecto",
+      "Atributo",
+      "Sujeto"
+    ],
+    correct: 3,
+    hint: 'Sustituye la subordinada por "eso": "Eso mejorará tu vocabulario".',
+    explanation:
+      '"Que leas todos los días" expresa aquello que producirá la mejora. Funciona como sujeto.'
+  }
+
+];
+
+let currentQuestion = 0;
+let score = 0;
+let answered = false;
+
+const questionElement = document.getElementById("question");
+const optionsElement = document.getElementById("options");
+const feedbackElement = document.getElementById("feedback");
+const hintElement = document.getElementById("hint");
+
+const questionNumberElement =
+  document.getElementById("questionNumber");
+
+const nextButton =
+  document.getElementById("nextBtn");
+
+const hintButton =
+  document.getElementById("hintBtn");
+
+const progress =
+  document.getElementById("progress");
+
+const progressText =
+  document.getElementById("progressText");
+
+const scoreText =
+  document.getElementById("scoreText");
+
+
+function loadQuestion() {
+
+  answered = false;
+
+  feedbackElement.className = "feedback";
+  feedbackElement.innerHTML = "";
+
+  hintElement.className = "hint";
+  hintElement.innerHTML = "";
+
+  nextButton.style.display = "none";
+  hintButton.style.display = "block";
+
+  const q = questions[currentQuestion];
+
+  questionNumberElement.textContent =
+    `Pregunta ${currentQuestion + 1}`;
+
+  questionElement.textContent =
+    q.question;
+
+  progressText.textContent =
+    `Pregunta ${currentQuestion + 1} de ${questions.length}`;
+
+  progress.style.width =
+    `${((currentQuestion) / questions.length) * 100}%`;
+
+  scoreText.textContent =
+    `Puntaje: ${score}`;
+
+  optionsElement.innerHTML = "";
+
+  q.options.forEach((option, index) => {
+
+    const button =
+      document.createElement("button");
+
+    button.className = "option";
+
+    button.textContent =
+      `${String.fromCharCode(65 + index)}. ${option}`;
+
+    button.addEventListener(
+      "click",
+      () => selectAnswer(index, button)
+    );
+
+    optionsElement.appendChild(button);
+
+  });
+
+}
+
+
+function selectAnswer(index, selectedButton) {
+
+  if (answered) return;
+
+  answered = true;
+
+  const q = questions[currentQuestion];
+
+  const optionButtons =
+    optionsElement.querySelectorAll(".option");
+
+  optionButtons.forEach(button => {
+    button.disabled = true;
+  });
+
+  optionButtons[q.correct]
+    .classList.add("correct");
+
+  if (index === q.correct) {
+
+    score++;
+
+    selectedButton.classList.add("correct");
+
+    feedbackElement.className =
+      "feedback show correct-feedback";
+
+    feedbackElement.innerHTML =
+      `<strong>¡Muy bien!</strong><br>${q.explanation}`;
+
+  } else {
+
+    selectedButton.classList.add("incorrect");
+
+    feedbackElement.className =
+      "feedback show incorrect-feedback";
+
+    feedbackElement.innerHTML =
+      `<strong>Revisa esta idea.</strong><br>${q.explanation}`;
+
+  }
+
+  scoreText.textContent =
+    `Puntaje: ${score}`;
+
+  nextButton.style.display = "block";
+
+}
+
+
+hintButton.addEventListener(
+  "click",
+  () => {
+
+    const q = questions[currentQuestion];
+
+    hintElement.textContent =
+      "Pista: " + q.hint;
+
+    hintElement.className =
+      "hint show";
+
+  }
+);
+
+
+nextButton.addEventListener(
+  "click",
+  () => {
+
+    currentQuestion++;
+
+    if (
+      currentQuestion <
+      questions.length
+    ) {
+
+      loadQuestion();
+
+    } else {
+
+      showResults();
+
+    }
+
+  }
+);
+
+
+function showResults() {
+
+  document.getElementById("quizContent")
+    .style.display = "none";
+
+  document.getElementById("results")
+    .style.display = "block";
+
+  progress.style.width = "100%";
+
+  progressText.textContent =
+    "Cuestionario completado";
+
+  document.getElementById("finalScore")
+    .textContent =
+    `${score} / ${questions.length}`;
+
+  const percentage =
+    (score / questions.length) * 100;
+
+  let message = "";
+
+  if (percentage === 100) {
+
+    message =
+      "Excelente. Dominas muy bien los conceptos.";
+
+  } else if (percentage >= 80) {
+
+    message =
+      "Muy buen resultado. Solo necesitas reforzar algunos detalles.";
+
+  } else if (percentage >= 60) {
+
+    message =
+      "Vas bien, pero conviene repasar las funciones sintácticas antes del examen.";
+
+  } else {
+
+    message =
+      "Conviene volver al repaso y practicar especialmente sujeto, OD, OI y subordinadas sustantivas.";
+
+  }
+
+  document.getElementById("finalMessage")
+    .textContent = message;
+
+}
+
+
+function restartQuiz() {
+
+  currentQuestion = 0;
+  score = 0;
+
+  document.getElementById("quizContent")
+    .style.display = "block";
+
+  document.getElementById("results")
+    .style.display = "none";
+
+  loadQuestion();
+
+}
+
+
+loadQuestion();
+
+</script>
+
+</body>
+</html>
